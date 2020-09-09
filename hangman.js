@@ -3,6 +3,7 @@ const Hangman = function (word, remainingGuesses) {
     this.remainingGuesses =  remainingGuesses
     this.guessedLetters = []
     this.status = 'playing'
+    this.message = ''
 }
 
 Hangman.prototype.getPuzzle = function () {
@@ -22,20 +23,23 @@ Hangman.prototype.Guess = function (guess) {
     const isUnique = !this.guessedLetters.includes(guess)
     const isBadGuess = !this.word.includes(guess)
 
-    if (isUnique && !isBadGuess) {
-        this.guessedLetters.push(guess)
-    }
+    if (this.status === 'playing') {
+        if (isUnique && !isBadGuess) {
+            this.guessedLetters.push(guess)
+        }
+    
+        if (isUnique && isBadGuess) {
+            this.remainingGuesses --
+        } else if (!isUnique) {
+            console.log('Value has already been guessed!')
+        }
 
-    if (isUnique && isBadGuess) {
-        this.remainingGuesses --
-    } else if (!isUnique) {
-        console.log('Value has already been guessed!')
+        this.caluclateStatus()
+        this.statusMessage()
     }
-
-    this.Status()
 }
 
-Hangman.prototype.Status = function () {
+Hangman.prototype.caluclateStatus = function () {
     let finished = true
 
     this.word.forEach(letter => {
@@ -53,4 +57,14 @@ Hangman.prototype.Status = function () {
    }
 }
 
+Hangman.prototype.statusMessage = function () {
 
+    if (this.status === 'finished') {
+        this.message = 'Great work! You guessed the word.'
+    } else if (this.status === 'failed') {
+        const word = this.word.join('')
+        this.message = `Nice try! The word was "${word}"`
+    } else {
+        this.message = `Guesses left: ${this.remainingGuesses}`
+    }
+}
