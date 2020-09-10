@@ -6,7 +6,6 @@ class Hangman {
         this.status = 'playing'
         this.message = ''
     }
-
     getPuzzle() {
         let puzzle = ''
         this.word.forEach(letter => {
@@ -18,7 +17,6 @@ class Hangman {
         });
         return puzzle
     }
-
     Guess(guess) {
         guess = guess.toLowerCase()
         const isUnique = !this.guessedLetters.includes(guess)
@@ -57,7 +55,6 @@ class Hangman {
             this.status = 'playing'
         }
     }
-
     statusMessage() {
         if (this.status === 'finished') {
             this.message = 'Great work! You guessed the word.'
