@@ -6,14 +6,22 @@ const statusMsgEl = document.querySelector('#statusMessage')
 
 puzzleEl.textContent = hangman1.getPuzzle()
 guessEl.textContent = hangman1.remainingGuesses
-console.log(hangman1.status)
 
-window.addEventListener('keypress', function (e) {
+getPuzzle((error, puzzle) => {
+    if (error) {
+        console.log(`Error: ${error}`)
+    } else {
+        console.log(puzzle)
+    }
+    
+})
+
+
+window.addEventListener('keypress', (e) => {
     const guess = String.fromCharCode(e.charCode)
     hangman1.Guess(guess)
     puzzleEl.textContent = hangman1.getPuzzle()
     guessEl.textContent = hangman1.remainingGuesses
     messageEl.textContent = hangman1.status
     statusMsgEl.textContent = hangman1.message
-    console.log(hangman1.status)
 })
